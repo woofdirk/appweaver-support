@@ -18,6 +18,8 @@
     <string name="supportkit_make_pack">Maak pakket en deel</string>
     <string name="supportkit_making_pack">Pakket wordt gemaakt…</string>
     <string name="supportkit_pack_failed">Het pakket kon niet gemaakt worden. Probeer opnieuw.</string>
+    <string name="supportkit_pack_handed">Supportpakket gemaakt (%1$s). Waar het naartoe gaat, kies jij in het deelvenster.</string>
+    <string name="supportkit_log_handed">Logboek gemaakt (%1$s). Waar het naartoe gaat, kies jij in het deelvenster.</string>
     <string name="supportkit_delete_log">Wis logboek</string>
     <string name="supportkit_banner">Supportmodus aan</string>
     <string name="supportkit_banner_tap">Tik voor info</string>

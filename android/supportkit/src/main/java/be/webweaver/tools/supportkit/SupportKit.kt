@@ -24,7 +24,7 @@ import java.util.Locale
  * Call [init] once from `Application.onCreate`; then [log] from anywhere (cheap, never blocks).
  */
 object SupportKit {
-    const val VERSION = "0.1.0"
+    const val VERSION = "0.1.1"
     private const val TAG = "SupportKit"
 
     /** Kit-provided categories (SPEC §5): `log`, `app`, `system`, `hb`. */

@@ -46,7 +46,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -77,16 +79,25 @@ fun SupportScreen(onDone: () -> Unit, modifier: Modifier = Modifier) {
     var askConsent by remember { mutableStateOf(false) }
     var busy by remember { mutableStateOf(false) }
     var failed by remember { mutableStateOf(false) }
+    // Android doesn't say what the owner did in the share sheet: only what was handed to it.
+    // Shown under the button that was used, so it's on screen when the owner comes back.
+    var handed by remember { mutableStateOf<Pair<Int, String>?>(null) }
     val values = remember { mutableStateMapOf<String, Int>().apply { put(SupportPack.LOG_ID, 1); config.packItems.forEach { put(it.id, it.defaultValue) } } }
     LaunchedEffect(Unit) { SupportKit.refreshSize() }
 
-    fun shareFile(make: () -> java.io.File?, mime: String) {
+    fun shareFile(make: () -> java.io.File?, mime: String, @androidx.annotation.StringRes done: Int) {
         busy = true
         failed = false
+        handed = null
         scope.launch {
             val file = withContext(Dispatchers.IO) { make() }
             busy = false
-            if (file != null) SupportKit.share(context, file, mime) else failed = true
+            if (file != null) {
+                handed = done to context.getString(done, Formatter.formatShortFileSize(context, file.length()))
+                SupportKit.share(context, file, mime)
+            } else {
+                failed = true
+            }
         }
     }
 
@@ -108,9 +119,10 @@ fun SupportScreen(onDone: () -> Unit, modifier: Modifier = Modifier) {
                 Card(modifier = Modifier.fillMaxWidth()) {
                     Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                         Text(stringResource(config.texts.smallLog), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        Button(onClick = { shareFile({ SupportKit.exportLog() }, "text/plain") }, enabled = !busy, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
+                        Button(onClick = { shareFile({ SupportKit.exportLog() }, "text/plain", R.string.supportkit_log_handed) }, enabled = !busy, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
                             Text(stringResource(R.string.supportkit_send_log))
                         }
+                        Handed(handed, R.string.supportkit_log_handed)
                         Text(stringResource(R.string.supportkit_send_log_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
@@ -173,8 +185,9 @@ fun SupportScreen(onDone: () -> Unit, modifier: Modifier = Modifier) {
                 }
             }
             if (failed) Text(stringResource(R.string.supportkit_pack_failed), color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+            Handed(handed, R.string.supportkit_pack_handed)
             Button(
-                onClick = { shareFile({ SupportPack.build(values.toMap()) }, "application/zip") },
+                onClick = { shareFile({ SupportPack.build(values.toMap()) }, "application/zip", R.string.supportkit_pack_handed) },
                 enabled = !busy && values.values.any { it != 0 },
                 modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp),
             ) {
@@ -224,6 +237,13 @@ fun SupportBanner(onClick: () -> Unit, modifier: Modifier = Modifier) {
         Text(stringResource(R.string.supportkit_banner), color = orange, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
         Text(stringResource(R.string.supportkit_banner_tap), color = orange, style = MaterialTheme.typography.bodySmall)
     }
+}
+
+/** "Log made (6 kB) …" under its own button: what was handed to the share sheet (not "sent"). */
+@Composable
+private fun Handed(handed: Pair<Int, String>?, which: Int) {
+    if (handed?.first != which) return
+    Text(handed.second, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite })
 }
 
 @Composable

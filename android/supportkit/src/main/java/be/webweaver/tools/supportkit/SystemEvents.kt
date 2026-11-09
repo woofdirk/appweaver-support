@@ -77,7 +77,13 @@ internal class SystemEvents(private val context: Context) {
         }
         ContextCompat.registerReceiver(context, receiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            power.addThermalStatusListener(context.mainExecutor) { SupportKit.log("system", "thermal ${thermal()}") }
+            // Android calls it once right away with the current status: only log changes.
+            var last = thermal()
+            power.addThermalStatusListener(context.mainExecutor) {
+                val now = thermal()
+                if (now != last) SupportKit.log("system", "thermal $now")
+                last = now
+            }
         }
     }
 
@@ -104,7 +110,7 @@ internal class SystemEvents(private val context: Context) {
         val seen = prefs.getLong("lastExitAt", 0)
         if (info.timestamp <= seen) return null
         prefs.edit { putLong("lastExitAt", info.timestamp) }
-        return "previous exit reason=${exitReason(info.reason)} at=${isoStamp(info.timestamp)} importance=${info.importance} pss=${info.pss / 1024}MB"
+        return "previous exit reason=${exitReason(info.reason)} at=${isoStamp(info.timestamp)} importance=${info.importance} ${if (info.pss > 0) "pss=${info.pss / 1024}MB" else ""}".trimEnd()
     }
 
     private fun isoStamp(millis: Long): String =
@@ -163,9 +169,9 @@ internal class SystemEvents(private val context: Context) {
         ApplicationExitInfo.REASON_DEPENDENCY_DIED -> "dependency-died"
         ApplicationExitInfo.REASON_INITIALIZATION_FAILURE -> "initialization-failure"
         ApplicationExitInfo.REASON_OTHER -> "other"
-        13 -> "freezer"
-        14 -> "package-state-change"
-        15 -> "package-updated"
+        14 -> "freezer" // Android 14+: REASON_FREEZER
+        15 -> "package-state-change"
+        16 -> "package-updated"
         else -> "unknown-$reason"
     }
 }

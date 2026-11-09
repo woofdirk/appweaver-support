@@ -19,6 +19,8 @@
     <string name="supportkit_make_pack">Make pack and share</string>
     <string name="supportkit_making_pack">Making the pack…</string>
     <string name="supportkit_pack_failed">The pack could not be made. Try again.</string>
+    <string name="supportkit_pack_handed">Support pack made (%1$s). You choose in the share sheet where it goes.</string>
+    <string name="supportkit_log_handed">Log made (%1$s). You choose in the share sheet where it goes.</string>
     <string name="supportkit_delete_log">Delete log</string>
     <string name="supportkit_banner">Support mode on</string>
     <string name="supportkit_banner_tap">Tap for info</string>

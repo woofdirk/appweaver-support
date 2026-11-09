@@ -43,7 +43,7 @@ object SupportPack {
             entries += PackEntry(item.id, files, item.sensitivity.json(), bytes)
             readme += res.getString(item.readme)
         }
-        File(dir, "README.txt").writeText(readmeText(res.getString(R.string.supportkit_readme_title, kit.config.filePrefix, stamp), readme, res.getString(R.string.supportkit_readme_included), res.getString(kit.config.texts.notIncluded)))
+        File(dir, "README.txt").writeText(readmeText(res.getString(R.string.supportkit_readme_title, kit.app.applicationInfo.loadLabel(kit.app.packageManager).toString(), stamp), readme, res.getString(R.string.supportkit_readme_included), res.getString(kit.config.texts.notIncluded)))
         File(dir, "manifest.json").writeText(manifest(kit.facts(), Instant.now(), SupportKit.VERSION, entries))
 
         val zip = File(kit.cacheDir(), "${dir.name}.zip")
@@ -84,7 +84,7 @@ object SupportPack {
                     })
                 }
             })
-        }.toString(2)
+        }.toString(2).replace("\\/", "/") // Android's org.json escapes every "/"
 
     /** Pure: README.txt in the phone's language. */
     fun readmeText(title: String, included: List<String>, includedHeading: String, notIncluded: String): String = buildString {

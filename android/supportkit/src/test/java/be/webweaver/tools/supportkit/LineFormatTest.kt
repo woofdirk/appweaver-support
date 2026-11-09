@@ -76,9 +76,10 @@ class LineFormatTest {
 
     @Test
     fun theManifestIsSupportPack2() {
-        val json = JSONObject(
-            SupportPack.manifest(facts, at, "0.1.0", listOf(PackEntry("log", listOf("log.txt"), "numbers", 1234), PackEntry("clips", listOf("clips"), "audio", 99)), brussels),
-        )
+        val text = SupportPack.manifest(facts, at, "0.1.0", listOf(PackEntry("log", listOf("log.txt"), "numbers", 1234), PackEntry("clips", listOf("clips"), "audio", 99)), brussels)
+        // Readable as text too: no escaped slashes.
+        assertTrue(text.contains("\"support-pack/2\""))
+        val json = JSONObject(text)
         assertEquals("support-pack/2", json.getString("format"))
         assertEquals("support-log/1", json.getString("logFormat"))
         assertEquals("android", json.getString("platform"))
