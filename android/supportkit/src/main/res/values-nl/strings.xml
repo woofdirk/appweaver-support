@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="supportkit_title">Supportmodus</string>
+    <string name="supportkit_done">Klaar</string>
+    <string name="supportkit_small_log_heading">Logboekje</string>
+    <string name="supportkit_send_log">Stuur logboek naar support</string>
+    <string name="supportkit_send_log_note">Er wordt niets vanzelf verstuurd: jij kiest in het deelvenster waarheen het bestand gaat.</string>
+    <string name="supportkit_switch">Supportmodus</string>
+    <string name="supportkit_switch_detail">Zolang hij aan staat zie je een oranje balk</string>
+    <string name="supportkit_consent_title">Supportmodus aanzetten?</string>
+    <string name="supportkit_consent_on">Aanzetten</string>
+    <string name="supportkit_cancel">Annuleren</string>
+    <string name="supportkit_kept_heading">Wat wordt bewaard op dit toestel</string>
+    <string name="supportkit_current_log">Huidig logboek</string>
+    <string name="supportkit_pack_heading">Supportpakket delen</string>
+    <string name="supportkit_pack_intro">Er wordt niets automatisch verstuurd. Jij kiest hier wat in het pakket zit en daarna waarheen het gaat (Gmail, Drive, Dropbox, …).</string>
+    <string name="supportkit_pack_log">Logboek</string>
+    <string name="supportkit_make_pack">Maak pakket en deel</string>
+    <string name="supportkit_making_pack">Pakket wordt gemaakt…</string>
+    <string name="supportkit_pack_failed">Het pakket kon niet gemaakt worden. Probeer opnieuw.</string>
+    <string name="supportkit_delete_log">Wis logboek</string>
+    <string name="supportkit_banner">Supportmodus aan</string>
+    <string name="supportkit_banner_tap">Tik voor info</string>
+    <string name="supportkit_readme_title">%1$s supportpakket, %2$s</string>
+    <string name="supportkit_readme_included">Inbegrepen:</string>
+    <string name="supportkit_readme_log">het supportlogboek (gebeurtenissen en cijfers)</string>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The kit's own words (EN). Apps add their own explanations through SupportTexts. -->
+<resources>
+    <string name="supportkit_title">Support mode</string>
+    <string name="supportkit_done">Done</string>
+    <string name="supportkit_small_log_heading">Log</string>
+    <string name="supportkit_send_log">Send log to support</string>
+    <string name="supportkit_send_log_note">Nothing is sent by itself: you choose in the share sheet where the file goes.</string>
+    <string name="supportkit_switch">Support mode</string>
+    <string name="supportkit_switch_detail">While it is on you see an orange bar</string>
+    <string name="supportkit_consent_title">Turn on support mode?</string>
+    <string name="supportkit_consent_on">Turn on</string>
+    <string name="supportkit_cancel">Cancel</string>
+    <string name="supportkit_kept_heading">What is kept on this device</string>
+    <string name="supportkit_current_log">Current log</string>
+    <string name="supportkit_pack_heading">Share a support pack</string>
+    <string name="supportkit_pack_intro">Nothing is sent automatically. You choose here what goes in the pack and then where it goes (Gmail, Drive, Dropbox, …).</string>
+    <string name="supportkit_pack_log">Log</string>
+    <string name="supportkit_make_pack">Make pack and share</string>
+    <string name="supportkit_making_pack">Making the pack…</string>
+    <string name="supportkit_pack_failed">The pack could not be made. Try again.</string>
+    <string name="supportkit_delete_log">Delete log</string>
+    <string name="supportkit_banner">Support mode on</string>
+    <string name="supportkit_banner_tap">Tap for info</string>
+    <string name="supportkit_readme_title">%1$s support pack, %2$s</string>
+    <string name="supportkit_readme_included">Included:</string>
+    <string name="supportkit_readme_log">the support log (events and numbers)</string>
+</resources>

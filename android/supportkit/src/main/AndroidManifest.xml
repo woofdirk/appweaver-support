@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <!-- Shares a support pack or log through the share sheet; nothing is uploaded by the kit. -->
+        <provider
+            android:name="be.webweaver.tools.supportkit.SupportFileProvider"
+            android:authorities="${applicationId}.supportkit"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/supportkit_paths" />
+        </provider>
+    </application>
+</manifest>
